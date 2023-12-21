@@ -112,5 +112,13 @@ class Players:
     Range = RangeDPS + RangeHealers
 
 
-def printResponse(response):
+def players_to_str(players):
+    result = ""
+    for player in players:
+        result += f"{player} "
+    result += "\n"
+    return result
+
+
+def print_response(response):
     print(json.dumps(response.json(), indent=2))

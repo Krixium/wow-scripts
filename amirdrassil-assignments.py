@@ -1,21 +1,12 @@
-from common import Players, Markers
+from common import Players, Markers, players_to_str
 
 
 def generate_igira_assignments():
-    soak_title = "|cffff00ff--- Intermission Weapon Soakers ---|r" + "\n"
-
-    headers = [
-        "{time:00:09,SCS:422776:1} - Back - ",
-        "{time:00:09,SCS:422776:2} - Right - ",
-        "{time:00:09,SCS:422776:3} - Left - ",
-    ]
-
-    soak_msg = [
-        "{text}Back Soak{/text}",
-        "{text}Right Soak{/text}",
-        "{text}Left Soak{/text}",
-    ]
-
+    """
+    Hard coded to back -> right -> left. Only change the "soakers" array.
+    Doesn't do assignments for second weapon combo because this script doesn't
+    support group numbers yet. Just click that in manually before you pull.
+    """
     soakers = [
         [
             Players.Frollexy,
@@ -42,6 +33,20 @@ def generate_igira_assignments():
         ],
     ]
 
+    soak_title = "|cffff00ff--- Intermission Weapon Soakers ---|r" + "\n"
+
+    headers = [
+        "{time:00:09,SCS:422776:1} - Back - ",
+        "{time:00:09,SCS:422776:2} - Right - ",
+        "{time:00:09,SCS:422776:3} - Left - ",
+    ]
+
+    soak_msg = [
+        "{text}Back Soak{/text}",
+        "{text}Right Soak{/text}",
+        "{text}Left Soak{/text}",
+    ]
+
     note = f"{soak_title}\n"
 
     for i in range(0, 3):
@@ -54,22 +59,23 @@ def generate_igira_assignments():
 
 
 def generate_council_assignments():
+    """
+    Shouldn't have to touch this. Just does melee first then ranged.
+    """
     note = "liquidStart\n"
-
-    for player in Players.Melee:
-        note += f"{player} "
-    note += "\n"
-
-    for player in Players.Range:
-        note += f"{player} "
-    note += "\n"
-
+    note += players_to_str(Players.Melee)
+    note += players_to_str(Players.Range)
     note += "liquidEnd\n"
 
     return note
 
 
 def generate_larry_assignments():
+    """
+    Nothing fancy for fighter fighters. Just put 3 sets 3 players in the
+    firefighters array. Same thing for CCers, put 2 sets for 4 players in
+    there. Do NOT touch the cc_markers or add_timings array.
+    """
     firefighters = [
         [Players.Maranca, Players.Inenta, Players.Kev],
         [Players.Kyttn, Players.Thefranchise, Players.Cowflaps],
@@ -95,9 +101,7 @@ def generate_larry_assignments():
 
     note = "hosestart\n"
     for rotation in firefighters:
-        for player in rotation:
-            note += f"{player} "
-        note += "\n"
+        note += players_to_str(rotation)
     note += "hoseend\n"
 
     note += "\n"
@@ -105,7 +109,7 @@ def generate_larry_assignments():
     for i in range(0, 2):
         note += f"CC Set {i+1}:\n"
         for j in range(0, 4):
-            note += f"{ccers[i][j]}{cc_markers[j][0]}{cc_markers[j][1]}\n"
+            note += f"{ccers[i][j]} {cc_markers[j][0]}{cc_markers[j][1]}\n"
         note += "\n"
 
     for i in range(0, 2):
@@ -118,6 +122,15 @@ def generate_larry_assignments():
 
 
 def generate_nymue_assignments():
+    """
+    Assign the two tanks and two healers to left_prefix and right_prefix. Fill
+    the back array with the 3 groups of people you want to go do the mythic
+    add. Put every dps in rotating_dps and put the remaining healers into
+    rotation_healers. For rotating_dps and rotating_healers, players near the
+    front will be prioritized going left while players near the end will be
+    prioritized going right when it is not their turn to do the mythic add.
+    """
+
     def ensure_no_mythic_add_duplicates(back):
         check = set()
         for rotation in back:
@@ -211,29 +224,19 @@ def generate_nymue_assignments():
                 else:
                     right_side_healers.append(healer)
 
-        left_assignment = left_prefix
-        for player in left_side_dps:
-            left_assignment += f"{player} "
-        for player in left_side_healers:
-            left_assignment += f"{player} "
-        left_assignment += "\n"
+        left_assignment = left_prefix + players_to_str(
+            left_side_dps + left_side_healers
+        )
         left_assignments.append(left_assignment)
 
-        right_assignment = right_prefix
-        for player in right_side_dps:
-            right_assignment += f"{player} "
-        for player in right_side_healers:
-            right_assignment += f"{player} "
-        right_assignment += "\n"
+        right_assignment = right_prefix + players_to_str(
+            right_side_dps + right_side_healers
+        )
         right_assignments.append(right_assignment)
 
     back_assignments = []
     for rotation in back:
-        assignment = back_prefix
-        for player in rotation:
-            assignment += f"{player} "
-        assignment += "\n"
-        back_assignments.append(assignment)
+        back_assignments.append(back_prefix + players_to_str(rotation))
 
     note = "liquidStart\n"
     for i in range(0, 3):
@@ -248,6 +251,10 @@ def generate_nymue_assignments():
 
 
 def main():
+    """
+    Generates and dumps assignments into a text file so that it can easily be
+    copied into MRT note in game.
+    """
     with open("amirdrassil-assignments.txt", "w") as output:
         output.write("igira assignments:\n\n\n")
         output.write(generate_igira_assignments())
