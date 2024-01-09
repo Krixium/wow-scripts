@@ -11,25 +11,24 @@ def generate_igira_assignments():
         [
             Players.Frollexy,
             Players.Duravz,
-            Players.Cowflaps,
-            Players.Teggyg,
             Players.Sossboy,
+            Players.Terprekt,
+            Players.Thefranchise,
         ],
         [
             Players.Frollexy,
             Players.Duravz,
             Players.Maranca,
-            Players.Bartemaeus,
-            Players.Terprekt,
+            Players.Zef,
+            Players.Kev,
         ],
         [
             Players.Frollexy,
             Players.Duravz,
-            Players.Zef,
-            Players.Seraphemia,
-            Players.Mewmonkas,
+            Players.Kyttn,
             Players.Hevansheal,
             Players.Pallydøn,
+            Players.Mewmonkas,
         ],
     ]
 
@@ -77,14 +76,14 @@ def generate_larry_assignments():
     there. Do NOT touch the cc_markers or add_timings array.
     """
     firefighters = [
-        [Players.Maranca, Players.Inenta, Players.Kev],
-        [Players.Kyttn, Players.Thefranchise, Players.Cowflaps],
-        [Players.Gunnær, Players.Sossboy, Players.Zaur],
+        [Players.Teggyg, Players.Zef, Players.Kev],
+        [Players.Kyttn, Players.Thefranchise, Players.Terprekt],
+        [Players.Hevansheal, Players.Sossboy, Players.Maranca],
     ]
 
     ccers = [
-        [Players.Kyttn, Players.Cowflaps, Players.Bartemaeus, Players.Thefranchise],
-        [Players.Kyttn, Players.Cowflaps, Players.Bartemaeus, Players.Kev],
+        [Players.Kyttn, Players.Teggyg, Players.Bartemaeus, Players.Thefranchise],
+        [Players.Kyttn, Players.Teggyg, Players.Bartemaeus, Players.Kev],
     ]
 
     cc_markers = [
@@ -141,9 +140,10 @@ def generate_nymue_assignments():
                 check.add(player)
 
     def ensure_back_assignments_are_playing(back, dps, healers):
+        length = len(rotating_dps) + len(rotating_healers)
         assert (
-            len(rotating_dps) + len(rotating_healers) == 16
-        ), "Some people are missing from the rotation"
+            length == 16
+        ), f"Some people are missing from the rotation, found {length}"
 
         for rotation in back:
             for player in rotation:
@@ -151,25 +151,29 @@ def generate_nymue_assignments():
                     player in dps or player in healers
                 ), f"{player} was assigned to the mythic add but isn't in on the fight"
 
+    left_tank = [Players.Duravz]
+    right_tank = [Players.Frollexy]
+    left_healers = []
+    right_healers = [Players.Teggyg, Players.Pallydøn]
     rotating_dps = [
         Players.Zef,
-        Players.Zargrul,
-        Players.Cowflaps,
-        Players.Thefranchise,
-        Players.Kyreoss,
+        Players.Felthpot,
         Players.Bartemaeus,
-        Players.Maranca,
         Players.Sossboy,
+        Players.Cowflaps,
+        Players.Maranca,
+        Players.Thefranchise,
+        Players.Terprekt,
+        Players.Kev,
+        Players.Skxyz,
         Players.Zaur,
         Players.Inenta,
-        Players.Skxyz,
         Players.Sanzensekai,
-        Players.Kev,
     ]
     rotating_healers = [
-        Players.Kyttn,
+        Players.Mewmonkas,
         Players.Hevansheal,
-        Players.Teggyg,
+        Players.Kyttn,
     ]
     back = [
         [
@@ -182,30 +186,31 @@ def generate_nymue_assignments():
         [
             Players.Kyttn,
             Players.Bartemaeus,
-            Players.Cowflaps,
             Players.Maranca,
-            Players.Zargrul,
+            Players.Cowflaps,
+            Players.Terprekt,
             Players.Thefranchise,
         ],
         [
-            Players.Teggyg,
+            Players.Mewmonkas,
             Players.Zaur,
-            Players.Kyreoss,
-            Players.Zef,
             Players.Inenta,
+            Players.Felthpot,
+            Players.Zef,
         ],
     ]
 
     ensure_no_mythic_add_duplicates(back)
     ensure_back_assignments_are_playing(back, rotating_dps, rotating_healers)
 
-    left_prefix = f"left {Players.Duravz} {Players.Mewmonkas} "
-    right_prefix = f"right {Players.Frollexy} {Players.Seraphemia} "
+    left_prefix = "left "
+    right_prefix = "right "
     back_prefix = "back "
 
     left_assignments = []
     right_assignments = []
     for i in range(0, 3):
+        # pick dps
         left_side_dps = []
         right_side_dps = []
         for dps in rotating_dps:
@@ -215,22 +220,24 @@ def generate_nymue_assignments():
                 else:
                     right_side_dps.append(dps)
 
-        left_side_healers = []
-        right_side_healers = []
+        # pick healers
+        left_side_healers = left_healers.copy()
+        right_side_healers = right_healers.copy()
         for healer in rotating_healers:
             if healer not in back[i]:
-                if len(left_side_healers) < 1:
+                if len(left_side_healers) < 2:
                     left_side_healers.append(healer)
                 else:
                     right_side_healers.append(healer)
 
+        # turn picks into strings
         left_assignment = left_prefix + players_to_str(
-            left_side_dps + left_side_healers
+            left_tank + left_side_healers + left_side_dps
         )
         left_assignments.append(left_assignment)
 
         right_assignment = right_prefix + players_to_str(
-            right_side_dps + right_side_healers
+            right_tank + right_side_healers + right_side_dps
         )
         right_assignments.append(right_assignment)
 
@@ -256,21 +263,30 @@ def main():
     copied into MRT note in game.
     """
     with open("amirdrassil-assignments.txt", "w") as output:
-        output.write("igira assignments:\n\n\n")
+        bar = "=" * 120 + "\n"
+        output.write(bar)
+        output.write("igira assignments:\n")
+        output.write(bar)
         output.write(generate_igira_assignments())
-        output.write("\n\n")
+        output.write("\n")
 
-        output.write("council assignments:\n\n\n")
+        output.write(bar)
+        output.write("council assignments:\n")
+        output.write(bar)
         output.write(generate_council_assignments())
-        output.write("\n\n")
+        output.write("\n")
 
-        output.write("larry assignments:\n\n\n")
+        output.write(bar)
+        output.write("larry assignments:\n")
+        output.write(bar)
         output.write(generate_larry_assignments())
-        output.write("\n\n")
+        output.write("\n")
 
-        output.write("nymue assignments:\n\n\n")
+        output.write(bar)
+        output.write("nymue assignments:\n")
+        output.write(bar)
         output.write(generate_nymue_assignments())
-        output.write("\n\n")
+        output.write("\n")
 
 
 if __name__ == "__main__":
