@@ -12,7 +12,6 @@ def generate_igira_assignments():
             Players.Frollexy,
             Players.Duravz,
             Players.Sossboy,
-            Players.Terprekt,
             Players.Thefranchise,
         ],
         [
@@ -20,14 +19,12 @@ def generate_igira_assignments():
             Players.Duravz,
             Players.Maranca,
             Players.Zef,
-            Players.Kev,
         ],
         [
             Players.Frollexy,
             Players.Duravz,
             Players.Kyttn,
             Players.Hevansheal,
-            Players.Pallydøn,
             Players.Mewmonkas,
         ],
     ]
@@ -76,14 +73,14 @@ def generate_larry_assignments():
     there. Do NOT touch the cc_markers or add_timings array.
     """
     firefighters = [
-        [Players.Teggyg, Players.Zef, Players.Kev],
-        [Players.Kyttn, Players.Thefranchise, Players.Terprekt],
-        [Players.Hevansheal, Players.Sossboy, Players.Maranca],
+        [Players.Teggyg, Players.Zef, Players.Bartemaeus],
+        [Players.Kyttn, Players.Thefranchise],
+        [Players.Hevansheal, Players.Zaur, Players.Maranca],
     ]
 
     ccers = [
-        [Players.Kyttn, Players.Teggyg, Players.Bartemaeus, Players.Thefranchise],
-        [Players.Kyttn, Players.Teggyg, Players.Bartemaeus, Players.Kev],
+        [Players.Kyttn, Players.Teggyg, Players.Maranca, Players.Thefranchise],
+        [Players.Kyttn, Players.Teggyg, Players.Maranca, Players.Bartemaeus],
     ]
 
     cc_markers = [
@@ -93,17 +90,17 @@ def generate_larry_assignments():
         [Markers.Square, Markers.Moon],
     ]
 
-    add_timings = [
-        "{time:00:41,SCS:421316:1}{spell:421325} |cff654321Adds|r - ",
-        "{time:01:34,SCS:421316:1}{spell:421325} |cff654321Adds|r - ",
-    ]
-
     note = "hosestart\n"
     for rotation in firefighters:
         note += players_to_str(rotation)
     note += "hoseend\n"
 
     note += "\n"
+
+    add_timings = [
+        "{time:00:41,SCS:421316:1}{spell:421325} |cff654321Adds|r - ",
+        "{time:01:34,SCS:421316:1}{spell:421325} |cff654321Adds|r - ",
+    ]
 
     for i in range(0, 2):
         note += f"CC Set {i+1}:\n"
@@ -154,7 +151,7 @@ def generate_nymue_assignments():
     left_tank = [Players.Duravz]
     right_tank = [Players.Frollexy]
     left_healers = []
-    right_healers = [Players.Teggyg, Players.Pallydøn]
+    right_healers = [Players.Teggyg]
     rotating_dps = [
         Players.Zef,
         Players.Felthpot,
@@ -163,9 +160,6 @@ def generate_nymue_assignments():
         Players.Cowflaps,
         Players.Maranca,
         Players.Thefranchise,
-        Players.Terprekt,
-        Players.Kev,
-        Players.Skxyz,
         Players.Zaur,
         Players.Inenta,
         Players.Sanzensekai,
@@ -178,17 +172,14 @@ def generate_nymue_assignments():
     back = [
         [
             Players.Hevansheal,
-            Players.Skxyz,
             Players.Sanzensekai,
             Players.Sossboy,
-            Players.Kev,
         ],
         [
             Players.Kyttn,
             Players.Bartemaeus,
             Players.Maranca,
             Players.Cowflaps,
-            Players.Terprekt,
             Players.Thefranchise,
         ],
         [
@@ -257,36 +248,119 @@ def generate_nymue_assignments():
     return note
 
 
+def generate_tswift_assignments():
+    """
+    To do assignemnts for this boss, just change the arrays of players below.
+    Everything is relative to list length. The only number to is tweak how many
+    dispels you intend to play.
+    """
+    total_num_dispels = 10
+
+    melee_groups = [
+        [Players.Zaur, Players.Inenta, Players.Zargrul],
+        [Players.Sanzensekai, Players.Wendywoo, Players.Warkami],
+    ]
+
+    first_freedoms = [Players.Gunnær]
+    second_freedoms = [Players.Kyreoss]
+
+    healer_dispel_order = [
+        Players.Seraphemia,
+        Players.Kyttn,
+        Players.Hevansheal,
+        Players.Mewmonkas,
+    ]
+
+    note = ""
+    note += "liquidStart\n"
+    for rotation in melee_groups:
+        note += players_to_str(rotation)
+    note += "liquidEnd\n"
+    note += "\n"
+
+    note += "liquidStart2\n"
+    skip_freedom_on_disel = 5
+    for i in range(0, total_num_dispels):
+        if i < skip_freedom_on_disel:
+            note += f"{first_freedoms[i % len(first_freedoms)]} {second_freedoms[i % len(second_freedoms)]}\n"
+
+        if i == skip_freedom_on_disel:
+            note += "nobody\n"
+
+        if i > skip_freedom_on_disel:
+            note += f"{first_freedoms[(i - 1) % len(first_freedoms)]} {second_freedoms[(i - 1) % len(second_freedoms)]}\n"
+    note += "liquidEnd2\n"
+    note += "\n"
+
+    note += "liquidStart3\n"
+    note += players_to_str(healer_dispel_order)
+    note += "liquidEnd3\n"
+    note += "\n"
+
+    note += f"#group1 {players_to_str(melee_groups[0])}"
+    note += f"#group2 {players_to_str(melee_groups[1])}"
+    note += "\n"
+
+    return note
+
+
+def generate_groups():
+    groups = [
+        [
+            Players.Frollexy,
+            Players.Duravz,
+            Players.Maranca,
+            Players.Bartemaeus,
+            Players.Asianbigpump,
+        ],
+        [
+            Players.Sossboy,
+            Players.Thefranchise,
+            Players.Gunnær,
+            Players.Kyreoss,
+            Players.Wendywoo,
+        ],
+        [
+            Players.Sanzensekai,
+            Players.Warkami,
+            Players.Zaur,
+            Players.Zargrul,
+            Players.Inenta,
+        ],
+        [
+            Players.Seraphemia,
+            Players.Kyttn,
+            Players.Hevansheal,
+            Players.Mewmonkas,
+            Players.Sobura,
+        ],
+    ]
+
+    import_string = ""
+
+    for group in groups:
+        for player in group:
+            import_string += f"{player.name}\n"
+
+    return import_string
+
+
+def format_section(title, content):
+    bar = "=" * 120
+    return f"{bar}\n{title}:\n{bar}\n{content}\n"
+
+
 def main():
     """
     Generates and dumps assignments into a text file so that it can easily be
     copied into MRT note in game.
     """
     with open("amirdrassil-assignments.txt", "w") as output:
-        bar = "=" * 120 + "\n"
-        output.write(bar)
-        output.write("igira assignments:\n")
-        output.write(bar)
-        output.write(generate_igira_assignments())
-        output.write("\n")
-
-        output.write(bar)
-        output.write("council assignments:\n")
-        output.write(bar)
-        output.write(generate_council_assignments())
-        output.write("\n")
-
-        output.write(bar)
-        output.write("larry assignments:\n")
-        output.write(bar)
-        output.write(generate_larry_assignments())
-        output.write("\n")
-
-        output.write(bar)
-        output.write("nymue assignments:\n")
-        output.write(bar)
-        output.write(generate_nymue_assignments())
-        output.write("\n")
+        # output.write(format_section("igira", generate_igira_assignments()))
+        # output.write(format_section("council", generate_council_assignments()))
+        # output.write(format_section("nymue", generate_nymue_assignments()))
+        output.write(format_section("tswift", generate_tswift_assignments()))
+        output.write(format_section("groups", generate_groups()))
 
 
 if __name__ == "__main__":
