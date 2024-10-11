@@ -9,6 +9,7 @@ rally = 97462
 last_stand = 12975
 shield_wall = 871
 spell_block = 392966
+spell_reflect = 23920
 
 
 def seconds(n):
@@ -22,31 +23,28 @@ def minutes(n):
 class Entry:
     def __init__(self, time) -> None:
         self._time = time
-        self._id = 0
-        self._note = ""
+        self._ids = []
+        self._notes = []
 
     def spell(self, id):
-        assert self._note == ""
-        self._id = int(id)
+        self._ids.append(int(id))
         return self
 
-    def note(self, s):
-        assert self._id == 0
-        self._note = s
+    def note(self, note):
+        self._notes.append(note)
         return self
 
     def __str__(self) -> str:
-        if self._id == 0 and self._note != "":
-            return f"{{time:{self._time}}} {me} {{text}}{self._note}{{/text}}  "
-        elif self._id != 0 and self._note == "":
-            return f"{{time:{self._time}}} {me} {{spell:{self._id}}}  "
-        else:
-            return ""
+        result = f"{{time:{self._time}}} "
+        for id in self._ids:
+            result = f"{result}{me} {{spell:{id}}}  "
+        for note in self._notes:
+            result = f"{result}{me} {{text}}{note}{{/text}}  "
+        return result
 
 
 note_entries = [
-    Entry(seconds(10)).spell(shield_wall),
-    Entry(seconds(15)).note("this is a test"),
+    Entry(seconds(10)).spell(rally).spell(shield_wall).spell(last_stand).spell(spell_block).spell(spell_reflect).note("this is a test"),
 ]
 
 
