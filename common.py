@@ -48,48 +48,43 @@ class Player:
 
 
 class Players:
-    # Duravz = Player("Duravz", PlayerClass.DemonHunter, Role.Tank)
-    # Frollexy = Player("Frollexy", PlayerClass.DeathKnight, Role.Tank)
-    #
-    # Jeromepal = Player("Jeromepal", PlayerClass.Druid, Role.Range)
-    # Kyttn = Player("Kyttn", PlayerClass.Druid, Role.Healer)
-    # Mewmonkas = Player("Mewmonkas", PlayerClass.Monk, Role.MeleeHealer)
-    # Seraphemia = Player("Seraphemia", PlayerClass.Priest, Role.Healer)
-    #
-    # Asianbigpump = Player("Asianbigpump", PlayerClass.DemonHunter, Role.Melee)
-    # Felthpot = Player("Felthpot", PlayerClass.DemonHunter, Role.Melee)
-    # Gunnær = Player("Gunnær", PlayerClass.Paladin, Role.Melee)
-    # Inenta = Player("Inenta", PlayerClass.Warrior, Role.Melee)
-    # Kyreoss = Player("Kyreoss", PlayerClass.Paladin, Role.Melee)
-    # Sanzensekai = Player("Sanzensekai", PlayerClass.Shaman, Role.Melee)
-    # Warkami = Player("Warkami", PlayerClass.Rogue, Role.Melee)
-    # Wendywoo = Player("Wendywoo", PlayerClass.Monk, Role.Melee)
-    # Zargrul = Player("Zargrulwr", PlayerClass.Warrior, Role.Melee)
-    # Zaur = Player("Zaur", PlayerClass.Warrior, Role.Melee)
-    #
-    # Bartemaeus = Player("Bartemaeus", PlayerClass.Warlock, Role.Range)
-    # Maranca = Player("Maranca", PlayerClass.Warlock, Role.Range)
-    # Sossboy = Player("Sossboy", PlayerClass.Mage, Role.Range)
-    # Swiver = Player("Swivoker", PlayerClass.Evoker, Role.Range)
-    # Thefranchise = Player("Thefranchise", PlayerClass.Hunter, Role.Range)
-    # Zef = Player("Zefraniu", PlayerClass.Evoker, Role.Range)
-    #
-    # Maeath = Player("Maeath", PlayerClass.Priest, Role.Healer)
-    # Zac = Player("Zacían", PlayerClass.Hunter, Role.Range)
-    # Droxa = Player("Droxa", PlayerClass.Hunter, Role.Range)
-    # Monkey = Player("Monkeysound", PlayerClass.Paladin, Role.Melee)
-    # Sovoke = Player("Sovoke", PlayerClass.Paladin, Role.Melee)
-    # Dwilkz = Player("Dwilkz", PlayerClass.Druid, Role.Range)
+    Froll = Player("Frollexy", PlayerClass.DeathKnight, Role.Tank)
+    Zaur = Player("Zaur", PlayerClass.Warrior, Role.Tank)
+    Zaurdk = Player("Zaurdk", PlayerClass.DeathKnight, Role.Tank)
 
-    Tanks = []
+    Fotem = Player("Fotem", PlayerClass.Shaman, Role.Healer)
+    Jenn = Player("Kyttn", PlayerClass.Druid, Role.Healer)
+    Mewmonkas = Player("Mewmonkas", PlayerClass.Monk, Role.MeleeHealer)
+    Mord = Player("Melzrynen", PlayerClass.Evoker, Role.Healer)
+    Patch = Player("Patchemup", PlayerClass.Priest, Role.Healer)
 
-    MeleeHealers = []
-    RangeHealers = []
+    Bug = Player("Bugser", PlayerClass.Rogue, Role.Melee)
+    Horn = Player("Hornstarlet", PlayerClass.DemonHunter, Role.Melee)
+    Inenta = Player("Inenta", PlayerClass.Warrior, Role.Melee)
+    Kyreoss = Player("Kyreoss", PlayerClass.Paladin, Role.Melee)
+    Zargrul = Player("Zargruldk", PlayerClass.DeathKnight, Role.Melee)
+    Zerg = Player("Zërgpöp", PlayerClass.Monk, Role.Melee)
+    Zwarg = Player("Zwarg", PlayerClass.Shaman, Role.Melee)
+
+    Jordan = Player("Bartemaeus", PlayerClass.Warlock, Role.Range)
+    Doug = Player("Sincrum", PlayerClass.Mage, Role.Range)
+    Jump = Player("Jumpskillz", PlayerClass.Hunter, Role.Range)
+    David = Player("Maranca", PlayerClass.Warlock, Role.Range)
+    Musty = Player("Redmustard", PlayerClass.Warlock, Role.Range)
+    Nik = Player("Teggyg", PlayerClass.Druid, Role.Range)
+    Soss = Player("Sossboy", PlayerClass.Mage, Role.Range)
+    Fran = Player("Thefranchise", PlayerClass.Hunter, Role.Range)
+    Zac = Player("Zacían", PlayerClass.Hunter, Role.Range)
+
+    Tanks = [Froll, Zaur, Zaurdk]
+
+    MeleeHealers = [Mewmonkas]
+    RangeHealers = [Fotem, Jenn, Mord, Patch]
     Healers = MeleeHealers + RangeHealers
 
-    MeleeDPS = []
+    MeleeDPS = [Bug, Horn, Inenta, Kyreoss, Zargrul, Zerg, Zwarg]
 
-    RangeDPS = []
+    RangeDPS = [Jordan, Doug, Jump, David, Musty, Nik, Soss, Fran, Zac]
 
     DPS = MeleeDPS + RangeDPS
     Melee = MeleeDPS + MeleeHealers
@@ -100,7 +95,6 @@ def players_to_str(players):
     result = ""
     for player in players:
         result += f"{player} "
-    result += "\n"
     return result
 
 
