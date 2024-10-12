@@ -1,28 +1,67 @@
 from common import players_to_str
-from console_colors import *
-from players import *
+import console_colors as cc
+import players as p
 
 
 def generate_header(title):
-    return f"""{HEADER}=========================================
+    return f"""{cc.HEADER}=========================================
 {title}
-========================================={ENDC}"""
+========================================={cc.ENDC}"""
 
 
 def generate_m_bloodbound_horror():
-    odd_affinity = [ Mew, Mord, Patch, Jordan, Nik, Inenta, Zac, Zargrul, Fran, Musty, Bug, ]
-    even_affinity = [ Andrew, Jenn, Zwarg, Zerg, Jump, Horn, David, Soss, Kyreoss, Doug, ]
-    playing = [
-        Jordan, Nik, Zaur, Inenta, Zac,
-        Froll, Zwarg, Zerg, Jump, Horn,
-        Zargrul, Mew, Mord, Fran, Musty,
-        David, Andrew, Jenn, Soss, Kyreoss,
+    odd_affinity = [
+        p.Mew,
+        p.Mord,
+        p.Patch,
+        p.Jordan,
+        p.Nik,
+        p.Inenta,
+        p.Zac,
+        p.Zargrul,
+        p.Fran,
+        p.Musty,
+        p.Bug,
     ]
-    odds = [ Zaur ]
-    evens = [ Froll ]
+    even_affinity = [
+        p.Andrew,
+        p.Jenn,
+        p.Zwarg,
+        p.Zerg,
+        p.Jump,
+        p.Horn,
+        p.David,
+        p.Soss,
+        p.Kyreoss,
+        p.Doug,
+    ]
+    playing = [
+        p.Jordan,
+        p.Nik,
+        p.Zaur,
+        p.Inenta,
+        p.Zac,
+        p.Froll,
+        p.Zwarg,
+        p.Zerg,
+        p.Jump,
+        p.Horn,
+        p.Zargrul,
+        p.Mew,
+        p.Mord,
+        p.Fran,
+        p.Musty,
+        p.David,
+        p.Andrew,
+        p.Jenn,
+        p.Soss,
+        p.Kyreoss,
+    ]
+    odds = [p.Zaur]
+    evens = [p.Froll]
 
     # tanks and healers first
-    for healer in Healers:
+    for healer in p.Healers:
         if healer in playing:
             if healer in odd_affinity and len(odds) < 3:
                 odds.append(healer)
@@ -64,21 +103,42 @@ def generate_m_bloodbound_horror():
 
 def generate_m_ovinax():
     playing = [
-        Froll, Zaurdk, Zac, Kyreoss, Andrew,
-        Inenta, Mew, Jenn, Zwarg, Zargrul,
-        Nik, Horn, Doug, Soss, Bug,
-        Mord, Jump, Jordan, Patch, Fran,
+        p.Froll,
+        p.Zaurdk,
+        p.Zac,
+        p.Kyreoss,
+        p.Andrew,
+        p.Inenta,
+        p.Mew,
+        p.Jenn,
+        p.Zwarg,
+        p.Zargrul,
+        p.Nik,
+        p.Horn,
+        p.Doug,
+        p.Soss,
+        p.Bug,
+        p.Mord,
+        p.Jump,
+        p.Jordan,
+        p.Patch,
+        p.Fran,
     ]
 
     # add CC
-    cc_rotation = [ Zerg, Horn, Inenta ]
+    cc_rotation = [p.Zerg, p.Horn, p.Inenta]
 
     # kicks
-    square_kicks = [ Zwarg, Kyreoss, Horn, Inenta ]
-    moon_kicks = [ Soss, Fran, Zac, Zerg ]
-    cross_kicks = [ Zargrul, Jump, Nik, Zargrul ]
+    square_kicks = [p.Zwarg, p.Kyreoss, p.Horn, p.Inenta]
+    moon_kicks = [p.Soss, p.Fran, p.Zac, p.Zerg]
+    cross_kicks = [p.Zargrul, p.Jump, p.Nik, p.Zargrul]
 
-    filler_kicks = [ Doug, Musty, Jordan, David, ]
+    filler_kicks = [
+        p.Doug,
+        p.Musty,
+        p.Jordan,
+        p.David,
+    ]
 
     for i in range(len(filler_kicks) - 1, -1, -1):
         if filler_kicks[i] not in playing:
@@ -88,8 +148,8 @@ def generate_m_ovinax():
     cross_kicks.insert(0, filler_kicks[1])
 
     # knockbacks
-    purple_knocks = [ Nik ]
-    green_knocks = [ Jenn ]
+    purple_knocks = [p.Nik]
+    green_knocks = [p.Jenn]
 
     return f"""
 CC Order: {cc_rotation[0]} -> {cc_rotation[1]} -> {cc_rotation[2]}
@@ -121,6 +181,7 @@ liquidStart2
 0 6 7 5
 liquidEnd2
 """
+
 
 if __name__ == "__main__":
     print(generate_header("Mythic Bloodbound Horror"))
