@@ -19,14 +19,15 @@ Zargrul = Player("Zargruldk", PlayerClass.DeathKnight, Role.Melee)
 Zerg = Player("Zërgpöp", PlayerClass.Monk, Role.Melee)
 Zwarg = Player("Zwarg", PlayerClass.Shaman, Role.Melee)
 
-Jordan = Player("Bartemaeus", PlayerClass.Warlock, Role.Range)
-Doug = Player("Sincrum", PlayerClass.Mage, Role.Range)
-Jump = Player("Jumpskillz", PlayerClass.Hunter, Role.Range)
 David = Player("Maranca", PlayerClass.Warlock, Role.Range)
+Doug = Player("Sincrum", PlayerClass.Mage, Role.Range)
+Fran = Player("Thefranchise", PlayerClass.Hunter, Role.Range)
+Hidrag = Player("Hidrag", PlayerClass.Evoker, Role.Range)
+Jordan = Player("Bartemaeus", PlayerClass.Warlock, Role.Range)
+Jump = Player("Jumpskillz", PlayerClass.Hunter, Role.Range)
 Musty = Player("Redmustard", PlayerClass.Warlock, Role.Range)
 Nik = Player("Teggyg", PlayerClass.Druid, Role.Range)
 Soss = Player("Sossboy", PlayerClass.Mage, Role.Range)
-Fran = Player("Thefranchise", PlayerClass.Hunter, Role.Range)
 Zac = Player("Zacían", PlayerClass.Hunter, Role.Range)
 
 Tanks = [Froll, Zaur, Zaurdk]
@@ -37,7 +38,7 @@ Healers = MeleeHealers + RangeHealers
 
 MeleeDPS = [Bug, Horn, Inenta, Kyreoss, Zargrul, Zerg, Zwarg]
 
-RangeDPS = [Jordan, Doug, Jump, David, Musty, Nik, Soss, Fran, Zac]
+RangeDPS = [David, Doug, Fran, Hidrag, Jordan, Jump, Musty, Nik, Soss, Zac]
 
 DPS = MeleeDPS + RangeDPS
 Melee = MeleeDPS + MeleeHealers

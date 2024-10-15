@@ -34,6 +34,7 @@ def generate_m_bloodbound_horror():
         p.Soss,
         p.Kyreoss,
         p.Doug,
+        p.Hidrag,
     ]
     playing = [
         p.Jordan,
